@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # A cold run is roughly 30-40 minutes: several GB of Mathlib oleans, then compiling
+    # Mathlib's lint-style executable. GitHub's default timeout is 6 hours, which on a
+    # private repo would spend 360 of the 2000 free monthly minutes on a single hung job.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
