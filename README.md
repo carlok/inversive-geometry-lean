@@ -1,4 +1,4 @@
-# lean-inversive-geometry
+# inversive-geometry-lean
 
 Generalized circles ("circlines") in Lean 4 — circles and lines as a single object, cut out by
 a Hermitian equation
