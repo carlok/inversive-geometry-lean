@@ -86,13 +86,18 @@ anyone can offer.
 ## Build
 
 ```bash
-lake exe cache get   # downloads prebuilt Mathlib oleans: several GB, tens of minutes
+lake exe cache get   # downloads ~8700 prebuilt Mathlib olean files
 lake build
 ```
 
 Requires `elan`. Pinned to Lean `v4.33.0` and the matching Mathlib tag; the toolchain is in
 `lean-toolchain` and the Mathlib revision in `lake-manifest.json`, both committed, so `cache get`
-should hit rather than compile Mathlib from source. If it misses, expect hours.
+should hit rather than compile Mathlib from source.
+
+On CI the fetch takes under three minutes and the project itself builds in seconds; on a home
+connection the fetch is the slow part and dominates everything else. If it *misses* the cache,
+Mathlib compiles from source and that takes hours — which almost always means the toolchain and
+the manifest have drifted apart.
 
 ## Style
 
