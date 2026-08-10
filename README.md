@@ -10,6 +10,65 @@ A|z|² + Bz + B̄z̄ + C = 0,    A, C real,  B complex.
 Mathlib has no such object. This repository is an attempt to build one, starting small and
 asking before scaling up.
 
+## The object
+
+Everything below follows from that one equation. It is short enough to check while reading.
+
+**Why `A` and `C` are real and `B` is not.** Conjugating `H` swaps `z` with `z̄` and `B` with `B̄`,
+so with `A` and `C` real it returns `H` unchanged:
+
+```
+conj(H(z)) = A·z̄·z + B̄·z̄ + B·z + C = H(z)
+```
+
+A complex number equal to its own conjugate is real, so `H(z) = 0` is **one real equation** — which
+is what a curve in the plane should cost. That is the whole reason for the asymmetry in the types.
+
+**Why `A = 0` versus `A ≠ 0` is exactly circle versus line.** For `A ≠ 0`, divide by `A` and
+complete the square:
+
+```
+|z|² + (B/A)·z + (B̄/A)·z̄ + C/A = 0
+|z + B̄/A|² = (|B|² − A·C) / A²
+```
+
+a circle with centre `−B̄/A` and radius `√(|B|² − A·C) / |A|`, real when `|B|² − A·C > 0`.
+
+For `A = 0` the quadratic term is gone, and since `B̄·z̄ = conj(B·z)`:
+
+```
+B·z + B̄·z̄ + C = 2·Re(B·z) + C = 0
+```
+
+a straight line, provided `B ≠ 0`. One equation, one family, and the case split on `A` is the
+line-versus-circle split. Mathlib currently writes that split out by hand in at least two places —
+see below.
+
+**Where the reflection comes from.** Take `H(z) = 0`, group by which terms carry `z`, and solve for
+it, treating `z̄` as independent:
+
+```
+z·(A·z̄ + B) + (B̄·z̄ + C) = 0
+z = (−B̄·z̄ − C) / (A·z̄ + B)
+```
+
+Read the right-hand side as a map and you have `reflect`. Its fixed points are the solutions of
+`H = 0` by construction, which is the first theorem. It is a Möbius transformation precomposed
+with conjugation, so it is *anti*-holomorphic — orientation-reversing, as a reflection should be.
+
+Sanity check on the unit circle: `A = 1`, `B = 0`, `C = −1` gives `H(z) = |z|² − 1`, and
+
+```
+reflect(z) = 1 / z̄
+```
+
+inversion in the unit circle.
+
+**The pole is the centre.** The denominator `A·z̄ + B` vanishes at `z = −B̄/A`, which is the centre
+computed above. Not an edge case to patch: inversion sends the centre to infinity and genuinely has
+no value there. Both theorems therefore carry an explicit non-vanishing hypothesis, since Lean's
+`x / 0 = 0` would otherwise make them true for the wrong reason.
+
 ## Status
 
 Early. What exists:
