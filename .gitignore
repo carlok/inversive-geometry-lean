@@ -9,9 +9,6 @@
 .DS_Store
 *.swp
 
-# Author's local working notes and drafts. Kept on disk, deliberately not part
-# of the repository. Adding the pattern is not enough on its own: a file that is
-# already tracked stays tracked until `git rm --cached` removes it from the index.
 /REVIEW.md
 /ZULIP-DRAFT.md
 /didactic/
