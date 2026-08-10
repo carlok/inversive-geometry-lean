@@ -1,0 +1,38 @@
+# Lean / Lake
+/.lake/
+/build/
+*.olean
+*.ilean
+*.hash
+
+# editor / OS
+.DS_Store
+*.swp
+
+# ---------------------------------------------------------------------------
+# Not for publication.
+#
+# This repository is intended to become public. The files below are working
+# material for the author and are deliberately untracked. They exist on disk;
+# they are not part of the repository.
+# ---------------------------------------------------------------------------
+
+# Adversarial design review: reviewer verdicts, kill criteria, and candid
+# commentary about how Mathlib maintainers triage contributions. Useful
+# internally, actively harmful as the first thing a maintainer reads.
+/REVIEW.md
+
+# Working notes toward a Zulip post, LLM-drafted. Mathlib policy forbids posting
+# LLM-written messages, so shipping the draft in a public repo would read as
+# routing around that policy. Also carries private-project references.
+/ZULIP-DRAFT.md
+
+# Line-by-line didactic commentary on every file. Written for the author's own
+# understanding; not a contribution, and it would double the apparent size of a
+# repository whose actual content is one small Lean file.
+/didactic/
+
+# The pre-publication git history, archived before it was discarded. It contains
+# the same private material as the files above, in both the file contents and
+# the commit messages. Restore with `git clone history-archive.bundle`.
+/history-archive.bundle

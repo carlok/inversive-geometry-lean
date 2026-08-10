@@ -1,0 +1,19 @@
+name = "InversiveGeometry"
+version = "0.1.0"
+keywords = ["math", "geometry", "inversive", "mobius"]
+defaultTargets = ["InversiveGeometry"]
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.33.0"
+
+[[lean_lib]]
+name = "InversiveGeometry"

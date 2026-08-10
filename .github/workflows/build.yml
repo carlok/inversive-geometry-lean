@@ -1,0 +1,68 @@
+name: build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      # Deliberately no build cache: every run fetches Mathlib oleans fresh, so a
+      # green badge means the pinned toolchain and manifest genuinely still work.
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Build
+        run: lake build
+
+      # Mathlib's own text-based style linter, built from the pinned Mathlib revision.
+      # Note the argument: `lint-style` lints the *imports* of the module it is given,
+      # filtered to the same package. So it must be handed the root module
+      # `InversiveGeometry`, not the individual files — naming a leaf module lints nothing
+      # and exits 0, which looks like a pass.
+      - name: Mathlib style linter
+        run: |
+          lake build lint-style
+          lake env .lake/packages/mathlib/.lake/build/bin/lint-style InversiveGeometry
+
+      # Mathlib's 100-character limit. This is NOT covered by the step above: the limit is
+      # enforced by `linter.style.longLine`, a syntax linter that only runs when
+      # `Mathlib.Tactic.Linter.Style` is imported. Mathlib files get that transitively; ours
+      # do not, and adding the import purely to enable a linter would be an import a Mathlib
+      # reviewer would ask us to remove. So the check lives here instead.
+      - name: Line length
+        run: |
+          if awk 'length > 100 {print FILENAME":"FNR" ("length" chars)"; bad=1} END {exit bad}' \
+               InversiveGeometry.lean InversiveGeometry/*.lean; then
+            echo "all lines within 100 characters"
+          else
+            echo "::error::lines exceed Mathlib's 100-character limit"
+            exit 1
+          fi
+
+      - name: No sorry, no custom axioms
+        run: |
+          ! grep -rn "sorry" InversiveGeometry/
+          ! grep -rn "^axiom" InversiveGeometry/
+
+      # Every theorem must depend on exactly the three standard Mathlib axioms and nothing else.
+      # The match is against the whole bracketed list, anchored at the end of the line. A loose
+      # pattern such as `propext.*Classical\.choice.*Quot\.sound` does NOT work here: the `.*`
+      # spans any extra axioms, so `[propext, sorryAx, Classical.choice, Quot.sound]` matches it
+      # and a `sorry` sails through. Keep this exact.
+      - name: Axiom check
+        run: |
+          lake build 2>&1 | tee build.log
+          grep "depends on axioms" build.log
+          ! grep "depends on axioms" build.log \
+            | grep -v "depends on axioms: \[propext, Classical.choice, Quot.sound\]$"
