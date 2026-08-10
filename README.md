@@ -1,6 +1,6 @@
 # inversive-geometry-lean
 
-Generalized circles ("circlines") in Lean 4 — circles and lines as a single object, cut out by
+Generalized circles ("circlines") in Lean 4 - circles and lines as a single object, cut out by
 a Hermitian equation
 
 ```
@@ -21,7 +21,7 @@ so with `A` and `C` real it returns `H` unchanged:
 conj(H(z)) = A·z̄·z + B̄·z̄ + B·z + C = H(z)
 ```
 
-A complex number equal to its own conjugate is real, so `H(z) = 0` is **one real equation** — which
+A complex number equal to its own conjugate is real, so `H(z) = 0` is **one real equation** - which
 is what a curve in the plane should cost. That is the whole reason for the asymmetry in the types.
 
 **Why `A = 0` versus `A ≠ 0` is exactly circle versus line.** For `A ≠ 0`, divide by `A` and
@@ -41,7 +41,7 @@ B·z + B̄·z̄ + C = 2·Re(B·z) + C = 0
 ```
 
 a straight line, provided `B ≠ 0`. One equation, one family, and the case split on `A` is the
-line-versus-circle split. Mathlib currently writes that split out by hand in at least two places —
+line-versus-circle split. Mathlib currently writes that split out by hand in at least two places -
 see below.
 
 **Where the reflection comes from.** Take `H(z) = 0`, group by which terms carry `z`, and solve for
@@ -54,7 +54,7 @@ z = (−B̄·z̄ − C) / (A·z̄ + B)
 
 Read the right-hand side as a map and you have `reflect`. Its fixed points are the solutions of
 `H = 0` by construction, which is the first theorem. It is a Möbius transformation precomposed
-with conjugation, so it is *anti*-holomorphic — orientation-reversing, as a reflection should be.
+with conjugation, so it is *anti*-holomorphic - orientation-reversing, as a reflection should be.
 
 Sanity check on the unit circle: `A = 1`, `B = 0`, `C = −1` gives `H(z) = |z|² − 1`, and
 
@@ -73,11 +73,11 @@ no value there. Both theorems therefore carry an explicit non-vanishing hypothes
 
 Early. What exists:
 
-- `reflection across a generalized circle` — the anti-Möbius involution whose fixed-point set is
+- `reflection across a generalized circle` - the anti-Möbius involution whose fixed-point set is
   the circle, with the fixed-point characterization and involutivity, `sorry`-free.
 
 What does not exist yet: the circline object itself as a bundled structure (the representation
-question is open — see below), and everything downstream of it.
+question is open - see below), and everything downstream of it.
 
 ## The representation question
 
@@ -94,16 +94,16 @@ No decision made. Input wanted before building on any of them.
 
 ## Why this object and not another
 
-Generalized circles are the hub of classical inversive geometry, not a leaf. Once the object
-exists you get, in rough dependency order: reflections and inversions; the theorem that Möbius
-maps send circlines to circlines; the classification of Möbius transformations by their fixed
-circlines; orthogonality and pencils; the boundary structure of the standard hyperbolic models.
-None of that is currently reachable in Mathlib because the object it all rests on is missing.
+Generalized circles are the hub of classical inversive geometry, not a leaf. What rests on the
+object, in rough dependency order:
 
-The count that motivated starting here — twelve of roughly twenty named results in the private
-note depend on generalized circles — is **not** offered as an argument that Mathlib needs the
-object. It measures centrality inside a note that was organized around circlines in the first
-place, which makes it circular as evidence of external value.
+- reflections and inversions (the part that exists here);
+- Möbius maps send generalized circles to generalized circles;
+- classification of Möbius transformations by their fixed circlines;
+- orthogonality and pencils;
+- the boundary structure of the standard hyperbolic models.
+
+None of that is currently reachable in Mathlib, because the object it all rests on is missing.
 
 The question that actually matters is *which existing Mathlib files would import this*. Two
 plausible consumers exist today, both currently written as case splits on exactly the
@@ -135,7 +135,7 @@ action. None of it defines a circline.
 ## Contributing
 
 Contributions welcome, and the intended first slice for anyone who wants one is *Möbius maps send
-generalized circles to generalized circles* — self-contained, and a few evenings of work once the
+generalized circles to generalized circles* - self-contained, and a few evenings of work once the
 representation is settled.
 
 I am not a professional mathematician and I am new to Mathlib conventions. I can write proofs; I
@@ -155,7 +155,7 @@ should hit rather than compile Mathlib from source.
 
 On CI the fetch takes under three minutes and the project itself builds in seconds; on a home
 connection the fetch is the slow part and dominates everything else. If it *misses* the cache,
-Mathlib compiles from source and that takes hours — which almost always means the toolchain and
+Mathlib compiles from source and that takes hours - which almost always means the toolchain and
 the manifest have drifted apart.
 
 ## Style
@@ -178,7 +178,7 @@ weeks**, or sooner if someone has a PR blocked on it. Between bumps the reposito
 deliberately stationary.
 
 If it has been longer than that and CI is red, treat the repo as stale and open an issue rather
-than assuming your branch is at fault — a stale pin is the likeliest cause, and a contributor's
+than assuming your branch is at fault - a stale pin is the likeliest cause, and a contributor's
 branch cannot be evaluated against a Mathlib revision the manifest no longer matches.
 
 ## Note on AI assistance

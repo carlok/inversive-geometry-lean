@@ -20,15 +20,15 @@ involution.
 
 ## Main definitions
 
-* `InversiveGeometry.hermitianForm` — the Hermitian form whose zero locus is the generalized
+* `InversiveGeometry.hermitianForm` - the Hermitian form whose zero locus is the generalized
   circle.
-* `InversiveGeometry.reflect` — reflection across that circle.
+* `InversiveGeometry.reflect` - reflection across that circle.
 
 ## Main statements
 
-* `InversiveGeometry.reflect_eq_self_iff` — the fixed points of the reflection are the zero
+* `InversiveGeometry.reflect_eq_self_iff` - the fixed points of the reflection are the zero
   locus of the Hermitian form.
-* `InversiveGeometry.reflect_reflect` — the reflection is an involution.
+* `InversiveGeometry.reflect_reflect` - the reflection is an involution.
 
 ## Implementation notes
 

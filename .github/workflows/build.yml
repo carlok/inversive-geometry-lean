@@ -33,7 +33,7 @@ jobs:
       # Mathlib's own text-based style linter, built from the pinned Mathlib revision.
       # Note the argument: `lint-style` lints the *imports* of the module it is given,
       # filtered to the same package. So it must be handed the root module
-      # `InversiveGeometry`, not the individual files — naming a leaf module lints nothing
+      # `InversiveGeometry`, not the individual files - naming a leaf module lints nothing
       # and exits 0, which looks like a pass.
       - name: Mathlib style linter
         run: |
