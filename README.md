@@ -71,17 +71,23 @@ no value there. Both theorems therefore carry an explicit non-vanishing hypothes
 
 ## Status
 
-Early. What exists:
+Early. One module, `InversiveGeometry/Reflection.lean`, containing the reflection across a
+generalized circle - the anti-Möbius involution whose fixed-point set is the circle:
 
-- `reflection across a generalized circle` - the anti-Möbius involution whose fixed-point set is
-  the circle, with the fixed-point characterization and involutivity, `sorry`-free.
+- `hermitianForm` and `reflect` - the form and the reflection it induces;
+- `reflect_eq_self_iff` - the fixed points are exactly the zero locus;
+- `reflect_reflect` - the reflection is an involution.
+
+All `sorry`-free, depending only on `propext`, `Classical.choice` and `Quot.sound`. `Verify.lean`
+prints those axiom closures on every build, so the claim is checked rather than asserted.
 
 What does not exist yet: the circline object itself as a bundled structure (the representation
 question is open - see below), and everything downstream of it.
 
 ## The representation question
 
-This is the open design question and the reason for the Zulip thread. Candidates:
+This is the open design question, and the reason nothing is being built on top of the object yet.
+Candidates:
 
 | | representation | note |
 |---|---|---|
