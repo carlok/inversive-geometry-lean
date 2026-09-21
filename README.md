@@ -155,7 +155,7 @@ lake exe cache get   # downloads ~8700 prebuilt Mathlib olean files
 lake build
 ```
 
-Requires `elan`. Pinned to Lean `v4.33.0` and the matching Mathlib tag; the toolchain is in
+Requires `elan`. Pinned to Lean `v4.34.0` and the matching Mathlib tag; the toolchain is in
 `lean-toolchain` and the Mathlib revision in `lake-manifest.json`, both committed, so `cache get`
 should hit rather than compile Mathlib from source.
 
